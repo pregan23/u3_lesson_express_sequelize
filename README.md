@@ -237,10 +237,24 @@ node server.js
 open http://localhost:3000/products/2
 ```
 
-> Restarting the server can be a pain! Let's fix this!
-> `npm install nodemon --save-dev`
-> Add `"start": "nodemon server.js"` inside the scripts section inside your package.json
-> Now run `npm start` and nodemon will watch for changes to your JavaScript files and restart your server :)
+Restarting the server can be a pain! Let's fix this by installing [nodemon](https://nodemon.io)!
+
+```sh
+npm install nodemon --save-dev
+```
+
+Modify your package.json file:
+
+```js
+....
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+....
+```
+
+Now run `npm start` and nodemon will watch for changes to your JavaScript files and restart your server :)
 
 Success!
 
