@@ -5,7 +5,7 @@
 1. Fork
 1. Clone
 
-# Express using Sequelize
+# Express & Sequelize
 
 ```sh
 cd express-sequelize-api
