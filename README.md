@@ -9,7 +9,7 @@
 
 ```sh
 cd express-sequelize-api
-npm init -y && npm install --save-dev sequelize-cli
+npm init -y && npm install sequelize &&  npm install --save-dev sequelize-cli
 ```
 
 Next we will initialize a Sequelize project:
