@@ -9,7 +9,7 @@
 
 ```sh
 cd express-sequelize-api
-npm init -y && npm install sequelize &&  npm install --save-dev sequelize-cli
+npm init -y && npm install sequelize pg &&  npm install --save-dev sequelize-cli
 ```
 
 Next we will initialize a Sequelize project:
@@ -26,9 +26,7 @@ express-sequelize-api/config/config.json
 "development": {
     "database": "products_development",
     "host": "127.0.0.1",
-    "dialect": "postgres",
-    "operatorsAliases": false,
-    "underscored": true
+    "dialect": "postgres"
   }
 ```
 
@@ -41,7 +39,7 @@ npx sequelize-cli db:create
 Next we will create a Product model:
 
 ```sh
-npx sequelize-cli model:generate --name Product --attributes title:string,description:string,price:integer --underscored
+npx sequelize-cli model:generate --name Product --attributes title:string,description:string,price:integer
 ```
 > Checkout the Sequelize Data Types that are available: https://sequelize.org/master/manual/data-types.html
 
@@ -70,50 +68,50 @@ module.exports = {
       title: 'Apple AirPods',
       description: "https://www.apple.com/airpods",
       price: 199,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       title: 'Apple iPhone Pro',
       description: "https://www.apple.com/iphone-11-pro",
       price: 1000,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       title: 'Apple Watch',
       description: "https://www.apple.com/watch",
       price: 499,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       title: 'Vespa Primavera',
       description: "https://www.vespa.com/us_EN/vespa-models/primavera.html",
       price: 3000,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       title: 'New Balance 574 Core',
       description: "https://www.newbalance.com/pd/574-core/ML574-EG.html",
       price: 84,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       title: 'Tribe Messenger Bike 004',
       description: "https://tribebicycles.com/collections/messenger-series/products/mess-004-tx",
       price: 675,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       title: 'Stumptown Hair Bender Coffee',
       description: "https://www.stumptowncoffee.com/products/hair-bender",
       price: 16,
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
 
@@ -200,15 +198,16 @@ Restart the server and test the route:
 
 ```sh
 node server.js
-open localhost:3000/products
 ```
+
+Try it in your browser: http://localhost:3000/products
 
 Now I would like to see a specific product.
 Let's say you type http://localhost:3000/products/2 then our API should respond with the product where id equals 2. Express let's us do this via the `req.params` object:
 
 ```js
 app.get('/products/:id', async (req, res) => {
-  const id = parseInt(req.params.id)
+  const { id } = req.params
   const product = await Product.findById(id)
   res.json(product)
 })
@@ -219,7 +218,7 @@ What if the product does not exist in the database? We would get an ugly error m
 ```js
 app.get('/products/:id', async (req, res) => {
     try {
-        const id = parseInt(req.params.id)
+        const { id } = req.params
         const product = await Product.findById(id)
         if (!product) throw Error('Product not found')
         res.json(product)
@@ -234,8 +233,9 @@ Does it work? Restart the server and test the route.
 
 ```sh
 node server.js
-open http://localhost:3000/products/2
 ```
+
+Open http://localhost:3000/products/2 in your browser.
 
 Restarting the server can be a pain! Let's fix this by installing [nodemon](https://nodemon.io)!
 
