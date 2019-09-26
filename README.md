@@ -219,7 +219,7 @@ What if the product does not exist in the database? We would get an ugly error m
 app.get('/products/:id', async (req, res) => {
     try {
         const { id } = req.params
-        const product = await Product.findById(id)
+        const product = await Product.findByPk(id)
         if (!product) throw Error('Product not found')
         res.json(product)
     } catch (e) {
