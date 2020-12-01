@@ -1,261 +1,324 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png)  SOFTWARE ENGINEERING IMMERSIVE
+# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) SOFTWARE ENGINEERING IMMERSIVE
 
 ## Getting started
 
-1. Fork
-1. Clone
+- Fork and Clone
+- npm install
 
 # Express & Sequelize
 
-```sh
-cd express-sequelize-api
-npm init -y && npm install sequelize pg &&  npm install --save-dev sequelize-cli
-```
+### Initial Setup
 
-Next we will initialize a Sequelize project:
-
-```sh
-npx sequelize-cli init
-```
-> Let's get familiar with all the commands available to us: `npx sequelize-cli --help`
-
-Let's configure our project to work with Postgres:
-
-express-sequelize-api/config/config.json
-```js
-"development": {
-    "database": "products_development",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
-  }
-```
-
-Cool, now create the Postgres database:
+Start by creating the database:
 
 ```sh
 npx sequelize-cli db:create
 ```
 
-Next we will create a Product model:
-
-```sh
-npx sequelize-cli model:generate --name Product --attributes title:string,description:string,price:integer
-```
-> Checkout the Sequelize Data Types that are available: https://sequelize.org/master/manual/data-types.html
-
-Now we need to execute our migration which will create the products table in our Postgres database along with the columns:
+Execute the existing migrations:
 
 ```sh
 npx sequelize-cli db:migrate
 ```
 
-> If you made a mistake, you can always rollback: `npx sequelize-cli db:migrate:undo`
-
-Now let's create a seed file:
-
-```sh
-npx sequelize-cli seed:generate --name products
-```
-
-Let's edit the seed file:
-
-```js
-'use strict';
-
-module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Products', [{
-      title: 'Apple AirPods',
-      description: "https://www.apple.com/airpods",
-      price: 199,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      title: 'Apple iPhone Pro',
-      description: "https://www.apple.com/iphone-11-pro",
-      price: 1000,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      title: 'Apple Watch',
-      description: "https://www.apple.com/watch",
-      price: 499,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      title: 'Vespa Primavera',
-      description: "https://www.vespa.com/us_EN/vespa-models/primavera.html",
-      price: 3000,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      title: 'New Balance 574 Core',
-      description: "https://www.newbalance.com/pd/574-core/ML574-EG.html",
-      price: 84,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      title: 'Tribe Messenger Bike 004',
-      description: "https://tribebicycles.com/collections/messenger-series/products/mess-004-tx",
-      price: 675,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    },
-    {
-      title: 'Stumptown Hair Bender Coffee',
-      description: "https://www.stumptowncoffee.com/products/hair-bender",
-      price: 16,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {});
-  },
-
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Products', null, {});
-  }
-};
-```
-
-Execute the seed file:
+Run the seed files:
 
 ```sh
 npx sequelize-cli db:seed:all
 ```
 
-> Made a mistake? You can always undo: `npx sequelize-cli db:seed:undo`
-
-Drop into psql and query the database for the demo user:
+Start your express server, all of the necessary dependencies, controllers and routers have been set up for you:
 
 ```sh
-psql products_development
-SELECT * FROM "Products";
+npm run dev
 ```
 
-Create a .gitignore file `touch .gitignore`!
+Make a `GET` request to `http:localhost:3001/` using your rest client, (Insomnia, Or Postman) and confirm that your server is working. You should see the following message:
 
-```sh
-/node_modules
-.DS_Store
+```json
+{
+  "message": "Server Works"
+}
 ```
 
-Cool, enough Sequelize. Now, Express. Let's install Express:
+### Testing Pre-Built Routes
 
-```sh
-npm install express --save
-```
-And now let's create our Express boilerplate:
+Some routes have been set up for you already. Test the following routes and ensure that you are recieving a json response:
 
-```sh
-touch server.js
-```
+- `GET` : `http:localhost:3001/api/feed/trending`
+- `GET` : `http:localhost:3001/api/feed/recents`
+- `GET` : `http:localhost:3001/api/users`
+- `GET` : `http:localhost:3001/api/users/:user_id`, **Get a user id from the above response!**
 
-Add the code:
+## We Do
+
+We'll be building basic `CRUD` functionality for our twerts. Endpoints have already been set up for you in the `TwertRouter.js` file.
+
+### Read
+
+Let's start with the first one:
 
 ```js
-const express = require('express');
-const PORT = process.env.PORT || 3000;
-
-const app = express();
-
-app.listen(PORT, () => {
-  console.log(`Express server listening on port ${PORT}`);
-});
-
-app.get('/', (req, res) => {
-  res.send("This is root!");
-});
+Router.get('/view/:twert_id')
 ```
 
-Let's make sure our server works:
-
-```sh
-node server.js
-open localhost:3000
-```
-
-Awesome! Next we want to be able to access our Product model from within the models folder.
-Add the following to the top of your server.js file:
+Open the `TwertController.js` file and find the function called `GetTwertDetails`. I should be able to find a twert by it's primary key. Query for a twert by id:
 
 ```js
-const { Product } = require('./models');
+const GetTwertDetails = async (req, res) => {
+  try {
+    const twert = await Twerts.findByPk(req.params.twert_id)
+    res.send(twert)
+  } catch (error) {
+    throw error
+  }
+}
 ```
 
-Let's create the route to show all products:
+Let's link this function to our `TwertRouter`:
 
 ```js
-app.get('/products', async (req, res) => {
-    const products = await Product.findAll()
-    res.json(products)
-})
+Router.get('/view/:twert_id', controller.GetTwertDetails)
 ```
 
-Restart the server and test the route:
+Test this endpoint by finding a random twert id in your database, you can also use any number between 1-400. Make a `GET` request to the following endpoint:
 
-```sh
-node server.js
+- `GET` : `http:localhost:3001/api/feed/view/<Some Twert Id>`
+
+You should a valid json response, here's an example:
+
+```json
+{
+  "updatedAt": "2020-12-01T03:54:06.668Z",
+  "ownerId": 89,
+  "owner_id": 89,
+  "likes": 23589,
+  "id": 3,
+  "createdAt": "2020-12-01T03:54:06.668Z",
+  "content": "Quo praesentium ex. Dolor molestiae velit ut tempora error voluptate voluptatem aut. Ea repellendus neque eveniet aut velit ea. Voluptates ad aperiam in. Voluptatem quo est aut assumenda sit."
+}
 ```
 
-Try it in your browser: http://localhost:3000/products
+### Create
 
-Now I would like to see a specific product.
-Let's say you type http://localhost:3000/products/2 then our API should respond with the product where id equals 2. Express let's us do this via the `req.params` object:
+Let's create a twert. Our `Twerts` model has the following fields:
 
 ```js
-app.get('/products/:id', async (req, res) => {
-  const { id } = req.params
-  const product = await Product.findById(id)
-  res.json(product)
-})
-```
-
-What if the product does not exist in the database? We would get an ugly error message. We can handle this by using a try/catch block:
-
-```js
-app.get('/products/:id', async (req, res) => {
-    try {
-        const { id } = req.params
-        const product = await Product.findByPk(id)
-        if (!product) throw Error('Product not found')
-        res.json(product)
-    } catch (e) {
-        console.log(e)
-        res.send('Product not found!')
+    {
+      content: DataTypes.TEXT,
+      likes: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+        validate: {
+          min: 0
+        }
+      },
+      ownerId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'owner_id',
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      }
     }
-})
 ```
 
-Does it work? Restart the server and test the route.
+The `ownerId` being a foreign key is **not** something we provide through the request body, typically you'll see this in a request query or request params. For our example we'll use the request params.
 
-```sh
-node server.js
-```
-
-Open http://localhost:3000/products/2 in your browser.
-
-Restarting the server can be a pain! Let's fix this by installing [nodemon](https://nodemon.io)!
-
-```sh
-npm install nodemon --save-dev
-```
-
-Modify your package.json file:
+In the `TwertRouter.js` file find the endpoint for post:
 
 ```js
-....
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
-  },
-....
+Router.post('/:user_id')
 ```
 
-Now run `npm start` and nodemon will watch for changes to your JavaScript files and restart your server :)
+In your `TwertController.js` file, find the function called `CreateTwert`.
 
-Success!
+Let's use the `create` method attached to our model to create a new twert:
 
-![](http://www.winsold.com/sites/all/modules/winsold/images/checkmark.svg)
+```js
+const CreateTwert = async (req, res) => {
+  try {
+    let ownerId = parseInt(req.params.user_id)
+    let twertBody = {
+      ownerId,
+      ...req.body
+    }
+    let twert = await Twerts.create(twertBody)
+    res.send(twert)
+  } catch (error) {
+    throw error
+  }
+}
+```
+
+Let's break this down:
+
+- We're getting the user id from the request params, by default the params are a string so we parse that value to an integer.
+- We create a new object containing everything from the request body and add in the `ownerId`, remember the object keys provided must match what's in our model.
+- Utilizing the `create` method for our model, we create a new twert and send it back in the response.
+
+Navigate back to your `TwertRouter.js` and link that method to it's appropriate endpoint:
+
+```js
+Router.post('/:user_id', controller.CreateTwert)
+```
+
+Test the endpoint in your rest client:
+
+- `POST` : `http://localhost:3001/api/feed/<Some User Id>` , again pick a random user id between 1-100.
+
+Here's an example of the request body as `JSON`:
+
+```json
+{
+  "content": "A non controversial twert...."
+}
+```
+
+You should see a new twert come back as a reponse:
+
+```json
+{
+  "updatedAt": "2020-12-01T07:32:50.688Z",
+  "ownerId": 3,
+  "likes": 0,
+  "id": 401,
+  "createdAt": "2020-12-01T07:32:50.688Z",
+  "content": "A non controversial twert...."
+}
+```
+
+You'll notice we never sent a `likes` field in the original `POST` request, that field is set be defaulted to `0` on creation. It would be nice to post a new twert with a billion likes I suppose...
+
+### Update
+
+Not really feeling that last twert? No problem, we can fix that.
+
+Find the `put` route in your `TwertRouter.js`:
+
+```js
+Router.put('/:twert_id')
+```
+
+You'll see it accepts a `twert_id` as a parameter. That's the identifier we'll use to perform our update operation.
+
+Find the `UpdateTwert` function in the `TwertController.js`. We'll use the `update` method from sequelize to perform our operation:
+
+```js
+const UpdateTwert = async (req, res) => {
+  try {
+    let twertId = parseInt(req.params.twert_id)
+    let updatedTwert = await Twerts.update(req.body, {
+      where: { id: twertId },
+      returning: true
+    })
+    res.send(updatedTwert)
+  } catch (error) {
+    throw error
+  }
+}
+```
+
+Breakdown:
+
+- Again parsing the param to an integer
+- Providing the request body to the update
+- Finding the record where the id is a match
+- Using the `returning:true` option to return the count of the records updated along with the updated records.
+
+Link this method to the `put` route:
+
+```js
+Router.put('/:twert_id', controller.UpdateTwert)
+```
+
+Test this in your rest client by sending a `PUT` request:
+
+- `PUT` : `http:localhost:3001/api/feed/<Use the id from the recently created twert>`
+
+Here's and example request body:
+
+```json
+{
+  "content": "A little less controversial twert...."
+}
+```
+
+Here's an example response:
+
+```json
+[
+  1,
+  [
+    {
+      "updatedAt": "2020-12-01T07:44:52.579Z",
+      "owner_id": 3,
+      "likes": 0,
+      "id": 401,
+      "createdAt": "2020-12-01T07:32:50.688Z",
+      "content": "A little less controversial twert...."
+    }
+  ]
+]
+```
+
+### Delete
+
+Time to delete some twerts. Find the `delete` endpoint in `TwertRouter.js`:
+
+```js
+Router.delete('/:twert_id')
+```
+
+Find the `DeleteTwert` function.
+
+Let's `destroy` some bad twerts:
+
+```js
+const DeleteTwert = async (req, res) => {
+  try {
+    let twertId = parseInt(req.params.twert_id)
+    await Twerts.destroy({ where: { id: twertId } })
+    res.send({ message: `Deleted twert with an id of ${twertId}` })
+  } catch (error) {
+    throw error
+  }
+}
+```
+
+Link this function to the `delete` endpoint:
+
+```js
+Router.delete('/:twert_id', controller.DeleteTwert)
+```
+
+Test this in your rest client by sending a `delete` request:
+
+- `DELETE` : `http:localhost:3001/api/feed/<Some Twert Id>`
+
+You should see the following message:
+
+```json
+{
+  "message": "Deleted twert with an id of 401"
+}
+```
+
+You can confirm the deletion by making a get request to the `/view/` endpoint with the id you just used to make the deletion.
+
+## You Do
+
+You've been tasked with building out CRUD functionality for comments. Work in the `CommentController` and `CommentRouter` files. Test your endpoints as you move along. You'll use the `/comments` endpoint to start your requests, example:
+
+> `http://localhost:3001/api/comments`
+
+## Bonus
+
+- Add a followers feature using a many-many-self relationship with the ability to follow other users
+
+- Build an endpoint that allows liking a twert or comment, you should only be allowed to increment the likes by 1 each time.
+
+- If you created the followers feature, build in functionality to view the amount of followers and following for a user when visiting their profile, you can use the `GetUserProfile` function in the user controller for this. An example of this is in the `TwertController`.
