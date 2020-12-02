@@ -45,10 +45,10 @@ Make a `GET` request to `http:localhost:3001/` using your rest client, (Insomnia
 
 Some routes have been set up for you already. Test the following routes and ensure that you are recieving a json response:
 
-- `GET` : `http:localhost:3001/api/feed/trending`
-- `GET` : `http:localhost:3001/api/feed/recents`
-- `GET` : `http:localhost:3001/api/users`
-- `GET` : `http:localhost:3001/api/users/:user_id`, **Get a user id from the above response!**
+- `GET` : `http://localhost:3001/api/feed/trending`
+- `GET` : `http://localhost:3001/api/feed/recents`
+- `GET` : `http://localhost:3001/api/users`
+- `GET` : `http://localhost:3001/api/users/:user_id`, **Get a user id from the above response!**
 
 ## We Do
 
@@ -83,7 +83,7 @@ Router.get('/view/:twert_id', controller.GetTwertDetails)
 
 Test this endpoint by finding a random twert id in your database, you can also use any number between 1-400. Make a `GET` request to the following endpoint:
 
-- `GET` : `http:localhost:3001/api/feed/view/<Some Twert Id>`
+- `GET` : `http://localhost:3001/api/feed/view/<Some Twert Id>`
 
 You should a valid json response, here's an example:
 
@@ -237,7 +237,7 @@ Router.put('/:twert_id', controller.UpdateTwert)
 
 Test this in your rest client by sending a `PUT` request:
 
-- `PUT` : `http:localhost:3001/api/feed/<Use the id from the recently created twert>`
+- `PUT` : `http://localhost:3001/api/feed/<Use the id from the recently created twert>`
 
 Here's and example request body:
 
@@ -297,7 +297,7 @@ Router.delete('/:twert_id', controller.DeleteTwert)
 
 Test this in your rest client by sending a `delete` request:
 
-- `DELETE` : `http:localhost:3001/api/feed/<Some Twert Id>`
+- `DELETE` : `http://localhost:3001/api/feed/<Some Twert Id>`
 
 You should see the following message:
 
