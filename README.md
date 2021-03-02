@@ -287,7 +287,7 @@ You should see the following message:
 
 You can confirm the deletion by making a get request to the `/view/` endpoint with the id you just used to make the deletion.
 
-## Additonal Routes
+## Additional Routes
 
 You've been tasked with building out CRUD functionality for comments. Work in the `CommentController` and `CommentRouter` files. Test your endpoints as you move along. You'll use the `/comments` endpoint to start your requests, example:
 
