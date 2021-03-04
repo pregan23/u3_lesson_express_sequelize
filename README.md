@@ -1,37 +1,17 @@
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) SOFTWARE ENGINEERING IMMERSIVE
+# Express And Sequelize
+
+![](https://miro.medium.com/max/599/1*klzv0Ev8tTw7PafogculEQ.jpeg)
 
 ## Getting started
 
 - Fork and Clone
 - npm install
+- `sequelize db:create`
+- `npx sequelize-cli db:migrate`
+- `npx sequelize-cli db:seed:all`
+- `npm run dev`
 
-# Express & Sequelize
-
-### Initial Setup
-
-Start by creating the database:
-
-```sh
-npx sequelize-cli db:create
-```
-
-Execute the existing migrations:
-
-```sh
-npx sequelize-cli db:migrate
-```
-
-Run the seed files:
-
-```sh
-npx sequelize-cli db:seed:all
-```
-
-Start your express server, all of the necessary dependencies, controllers and routers have been set up for you:
-
-```sh
-npm run dev
-```
+## Testing The Server
 
 Make a `GET` request to `http:localhost:3001/` using your rest client, (Insomnia, Or Postman) and confirm that your server is working. You should see the following message:
 
@@ -41,7 +21,7 @@ Make a `GET` request to `http:localhost:3001/` using your rest client, (Insomnia
 }
 ```
 
-### Testing Pre-Built Routes
+## Testing Pre-Built Routes
 
 Some routes have been set up for you already. Test the following routes and ensure that you are recieving a json response:
 
@@ -49,8 +29,6 @@ Some routes have been set up for you already. Test the following routes and ensu
 - `GET` : `http://localhost:3001/api/feed/recents`
 - `GET` : `http://localhost:3001/api/users`
 - `GET` : `http://localhost:3001/api/users/:user_id`, **Get a user id from the above response!**
-
-## We Do
 
 We'll be building basic `CRUD` functionality for our twerts. Endpoints have already been set up for you in the `TwertRouter.js` file.
 
@@ -309,7 +287,7 @@ You should see the following message:
 
 You can confirm the deletion by making a get request to the `/view/` endpoint with the id you just used to make the deletion.
 
-## You Do
+## Additional Routes
 
 You've been tasked with building out CRUD functionality for comments. Work in the `CommentController` and `CommentRouter` files. Test your endpoints as you move along. You'll use the `/comments` endpoint to start your requests, example:
 
@@ -322,3 +300,8 @@ You've been tasked with building out CRUD functionality for comments. Work in th
 - Build an endpoint that allows liking a twert or comment, you should only be allowed to increment the likes by 1 each time.
 
 - If you created the followers feature, build in functionality to view the amount of followers and following for a user when visiting their profile, you can use the `GetUserProfile` function in the user controller for this. An example of this is in the `TwertController`.
+
+## Resources
+
+- [Sequelize Docs](https://sequelize.org/master/)
+- [Express Docs](https://expressjs.com/)
