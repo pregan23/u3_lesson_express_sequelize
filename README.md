@@ -23,7 +23,7 @@ Make a `GET` request to `http:localhost:3001/` using your rest client, (Insomnia
 
 ## Testing Pre-Built Routes
 
-Some routes have been set up for you already. Test the following routes and ensure that you are recieving a json response:
+Some routes have been set up for you already. Test the following routes and ensure that you are receiving a json response:
 
 - `GET` : `http://localhost:3001/api/feed/trending`
 - `GET` : `http://localhost:3001/api/feed/recents`
@@ -42,16 +42,7 @@ Router.get('/view/:twert_id')
 
 Open the `TwertController.js` file and find the function called `GetTwertDetails`. I should be able to find a twert by it's primary key. Query for a twert by id:
 
-```js
-const GetTwertDetails = async (req, res) => {
-  try {
-    const twert = await Twerts.findByPk(req.params.twert_id)
-    res.send(twert)
-  } catch (error) {
-    throw error
-  }
-}
-```
+![](assets/get_details.png)
 
 Let's link this function to our `TwertRouter`:
 
@@ -81,28 +72,7 @@ You should a valid json response, here's an example:
 
 Let's create a twert. Our `Twerts` model has the following fields:
 
-```js
-    {
-      content: DataTypes.TEXT,
-      likes: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-        validate: {
-          min: 0
-        }
-      },
-      ownerId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        field: 'owner_id',
-        references: {
-          model: 'users',
-          key: 'id'
-        }
-      }
-    }
-```
+![](assets/twert_model.png)
 
 The `ownerId` being a foreign key is **not** something we provide through the request body, typically you'll see this in a request query or request params. For our example we'll use the request params.
 
@@ -116,21 +86,7 @@ In your `TwertController.js` file, find the function called `CreateTwert`.
 
 Let's use the `create` method attached to our model to create a new twert:
 
-```js
-const CreateTwert = async (req, res) => {
-  try {
-    let ownerId = parseInt(req.params.user_id)
-    let twertBody = {
-      ownerId,
-      ...req.body
-    }
-    let twert = await Twerts.create(twertBody)
-    res.send(twert)
-  } catch (error) {
-    throw error
-  }
-}
-```
+![](assets/create_twert.png)
 
 Let's break this down:
 
@@ -185,20 +141,7 @@ You'll see it accepts a `twert_id` as a parameter. That's the identifier we'll u
 
 Find the `UpdateTwert` function in the `TwertController.js`. We'll use the `update` method from sequelize to perform our operation:
 
-```js
-const UpdateTwert = async (req, res) => {
-  try {
-    let twertId = parseInt(req.params.twert_id)
-    let updatedTwert = await Twerts.update(req.body, {
-      where: { id: twertId },
-      returning: true
-    })
-    res.send(updatedTwert)
-  } catch (error) {
-    throw error
-  }
-}
-```
+![](assets/update_twert.png)
 
 Breakdown:
 
@@ -255,17 +198,7 @@ Find the `DeleteTwert` function.
 
 Let's `destroy` some bad twerts:
 
-```js
-const DeleteTwert = async (req, res) => {
-  try {
-    let twertId = parseInt(req.params.twert_id)
-    await Twerts.destroy({ where: { id: twertId } })
-    res.send({ message: `Deleted twert with an id of ${twertId}` })
-  } catch (error) {
-    throw error
-  }
-}
-```
+![](assets/delete_twert.png)
 
 Link this function to the `delete` endpoint:
 
