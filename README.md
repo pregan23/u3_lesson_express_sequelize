@@ -2,6 +2,12 @@
 
 ![](https://miro.medium.com/max/599/1*klzv0Ev8tTw7PafogculEQ.jpeg)
 
+## Overview
+
+In this lab we'll learn how to integrate our newly learned Sequelize skills with Express to build a restful api. We'll perform full `CRUD` functionality on our `Twert` model.
+
+_"Yes, I know totally not a tweet or twitter..."_
+
 ## Getting started
 
 - Fork and Clone
@@ -233,6 +239,10 @@ You've been tasked with building out CRUD functionality for comments. Work in th
 - Build an endpoint that allows liking a twert or comment, you should only be allowed to increment the likes by 1 each time.
 
 - If you created the followers feature, build in functionality to view the amount of followers and following for a user when visiting their profile, you can use the `GetUserProfile` function in the user controller for this. An example of this is in the `TwertController`.
+
+## Recap
+
+In this lab, we learned how to integrate our Sequelize models with Express to build a full `CRUD` `restful` api.
 
 ## Resources
 
