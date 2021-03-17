@@ -12,14 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       Twerts.belongsTo(models.User, {
         foreignKey: 'owner_id',
         as: 'owner',
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
       Twerts.hasMany(models.Comment, {
         foreignKey: 'twert_id',
         as: 'comments',
-        onDelete: 'cascade',
-        onUpdate: 'cascade'
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       })
     }
   }
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         field: 'owner_id',
-        onDelete: 'cascade',
+        onDelete: 'CASCADE',
         references: {
           model: 'users',
           key: 'id'
