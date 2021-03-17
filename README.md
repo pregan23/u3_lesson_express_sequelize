@@ -13,8 +13,8 @@ _"Yes, I know totally not a tweet or twitter..."_
 - Fork and Clone
 - npm install
 - `sequelize db:create`
-- `npx sequelize-cli db:migrate`
-- `npx sequelize-cli db:seed:all`
+- `sequelize db:migrate`
+- `sequelize db:seed:all`
 - `npm run dev`
 
 ## Testing The Server
