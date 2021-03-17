@@ -19,6 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         field: 'twert_id',
+        onDelete: 'cascade',
         references: {
           model: 'twerts',
           key: 'id'
@@ -28,6 +29,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         field: 'owner_id',
+        onDelete: 'cascade',
         references: {
           model: 'users',
           key: 'id'
