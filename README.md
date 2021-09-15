@@ -1,14 +1,14 @@
-# Express And Sequelize
+# Express & Sequelize
 
 ![](https://miro.medium.com/max/599/1*klzv0Ev8tTw7PafogculEQ.jpeg)
 
 ## Overview
 
-In this lab we'll learn how to integrate our newly learned Sequelize skills with Express to build a restful api. We'll perform full `CRUD` functionality on our `Twert` model.
+In this lab we'll learn how to integrate our newly learned Sequelize skills with Express to build a RESTful API. We'll perform full `CRUD` functionality on our `Twert` model.
 
 _"Yes, I know totally not a tweet or twitter..."_
 
-## Getting started
+## Getting Started
 
 - Fork and Clone
 - npm install
@@ -17,9 +17,9 @@ _"Yes, I know totally not a tweet or twitter..."_
 - `sequelize db:seed:all`
 - `npm run dev`
 
-## Testing The Server
+## Testing the Server
 
-Make a `GET` request to `http:localhost:3001/` using your rest client, (Insomnia, Or Postman) and confirm that your server is working. You should see the following message:
+Make a `GET` request to `http:localhost:3001/` using your REST client (Insomnia, Or Postman), and confirm that your server is working. You should see the following message:
 
 ```json
 {
@@ -29,14 +29,14 @@ Make a `GET` request to `http:localhost:3001/` using your rest client, (Insomnia
 
 ## Testing Pre-Built Routes
 
-Some routes have been set up for you already. Test the following routes and ensure that you are receiving a json response:
+Some routes have been set up for you already. Test the following routes and ensure that you are receiving a JSON response:
 
 - `GET` : `http://localhost:3001/api/feed/trending`
 - `GET` : `http://localhost:3001/api/feed/recents`
 - `GET` : `http://localhost:3001/api/users`
 - `GET` : `http://localhost:3001/api/users/:user_id`, **Get a user id from the above response!**
 
-We'll be building basic `CRUD` functionality for our twerts. Endpoints have already been set up for you in the `TwertRouter.js` file.
+We'll be building basic **CRUD** functionality for our twerts. Endpoints have already been set up for you in the `TwertRouter.js` file.
 
 ### Read
 
@@ -60,7 +60,7 @@ Test this endpoint by finding a random twert id in your database, you can also u
 
 - `GET` : `http://localhost:3001/api/feed/view/<Some Twert Id>`
 
-You should a valid json response, here's an example:
+You should a valid JSON response, here's an example:
 
 ```json
 {
@@ -106,11 +106,11 @@ Navigate back to your `TwertRouter.js` and link that method to it's appropriate 
 Router.post('/:user_id', controller.CreateTwert)
 ```
 
-Test the endpoint in your rest client:
+Test the endpoint in your REST client:
 
 - `POST` : `http://localhost:3001/api/feed/<Some User Id>` , again pick a random user id between 1-100.
 
-Here's an example of the request body as `JSON`:
+Here's an example of the request body as JSON:
 
 ```json
 {
@@ -156,17 +156,17 @@ Breakdown:
 - Finding the record where the id is a match
 - Using the `returning:true` option to return the count of the records updated along with the updated records.
 
-Link this method to the `put` route:
+Link this method to the `PUT` route:
 
 ```js
 Router.put('/:twert_id', controller.UpdateTwert)
 ```
 
-Test this in your rest client by sending a `PUT` request:
+Test this in your REST client by sending a `PUT` request:
 
 - `PUT` : `http://localhost:3001/api/feed/<Use the id from the recently created twert>`
 
-Here's and example request body:
+Here's an example request body:
 
 ```json
 {
@@ -212,7 +212,7 @@ Link this function to the `delete` endpoint:
 Router.delete('/:twert_id', controller.DeleteTwert)
 ```
 
-Test this in your rest client by sending a `delete` request:
+Test this in your REST client by sending a `delete` request:
 
 - `DELETE` : `http://localhost:3001/api/feed/<Some Twert Id>`
 
@@ -224,7 +224,7 @@ You should see the following message:
 }
 ```
 
-You can confirm the deletion by making a get request to the `/view/` endpoint with the id you just used to make the deletion.
+You can confirm the deletion by making a GET request to the `/view/` endpoint with the id you just used to make the deletion.
 
 ## Additional Routes
 
@@ -242,7 +242,7 @@ You've been tasked with building out CRUD functionality for comments. Work in th
 
 ## Recap
 
-In this lab, we learned how to integrate our Sequelize models with Express to build a full `CRUD` `restful` api.
+In this lab, we learned how to integrate our Sequelize models with Express to build a full CRUD RESTful API.
 
 ## Resources
 
