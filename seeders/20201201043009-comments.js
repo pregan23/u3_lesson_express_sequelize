@@ -1,7 +1,7 @@
 'use strict'
 const { User, Twerts, sequelize } = require('../models')
 const { Op } = require('sequelize')
-const faker = require('faker')
+const falso = require('@ngneat/falso')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const comments = await Promise.all(
@@ -13,8 +13,8 @@ module.exports = {
           raw: true
         })
         return {
-          content: faker.lorem.paragraph(),
-          likes: faker.random.number({ max: 40000 }),
+          content: falso.randParagraph(),
+          likes: falso.randNumber({ min: 0, max: 40000 }),
           owner_id: user.id,
           twert_id: twert.id
         }
