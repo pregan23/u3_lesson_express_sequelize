@@ -4,7 +4,7 @@
 
 ## Overview
 
-In this lab we'll learn how to integrate our newly learned Sequelize skills with Express to build a RESTful API. We'll perform full `CRUD` functionality on our `Twert` model.
+In this lesson we'll learn how to integrate our newly learned Sequelize skills with Express to build a RESTful API. We'll perform full `CRUD` functionality on our `Twert` model.
 
 _"Yes, I know totally not a tweet or twitter..."_
 
