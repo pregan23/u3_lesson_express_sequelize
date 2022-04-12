@@ -10,8 +10,8 @@ _"Yes, I know totally not a tweet or twitter..."_
 
 ## Getting Started
 
-- Fork and Clone
-- npm install
+- `Fork` and `Clone`
+- `npm install`
 - `sequelize db:create`
 - `sequelize db:migrate`
 - `sequelize db:seed:all`
